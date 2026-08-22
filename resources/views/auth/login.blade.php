@@ -1,12 +1,12 @@
 <x-guest-layout>
     <div class="mb-6">
-        <h2 class="text-xl font-bold text-white">Masuk ke Recovest Finance</h2>
-        <p class="text-xs text-slate-400 mt-1">Masukkan kredensial akun Anda untuk mengelola kas & rekonsiliasi.</p>
+        <h2 class="text-xl font-bold text-slate-900 dark:text-white">Masuk ke Recovest Finance</h2>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Masukkan kredensial akun Anda untuk mengelola kas & rekonsiliasi.</p>
     </div>
 
     <!-- Session Status -->
     @if (session('status'))
-        <div class="mb-4 text-xs font-semibold text-emerald-400 bg-emerald-500/10 p-3 rounded-xl border border-emerald-500/30">
+        <div class="mb-4 text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 p-3 rounded-xl border border-emerald-500/30">
             {{ session('status') }}
         </div>
     @endif
@@ -16,31 +16,31 @@
 
         <!-- Email Address -->
         <div>
-            <label for="email" class="block text-xs font-semibold text-slate-300 mb-1">Alamat Email</label>
-            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" placeholder="admin@recovest.id" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors">
+            <label for="email" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Alamat Email</label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" placeholder="admin@recovest.id" class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors">
             @if ($errors->get('email'))
-                <p class="mt-1 text-xs text-rose-400 font-semibold">{{ $errors->first('email') }}</p>
+                <p class="mt-1 text-xs text-rose-500 dark:text-rose-400 font-semibold">{{ $errors->first('email') }}</p>
             @endif
         </div>
 
         <!-- Password -->
         <div>
-            <label for="password" class="block text-xs font-semibold text-slate-300 mb-1">Kata Sandi (Password)</label>
-            <input id="password" type="password" name="password" required autocomplete="current-password" placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors">
+            <label for="password" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Kata Sandi (Password)</label>
+            <input id="password" type="password" name="password" required autocomplete="current-password" placeholder="••••••••" class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors">
             @if ($errors->get('password'))
-                <p class="mt-1 text-xs text-rose-400 font-semibold">{{ $errors->first('password') }}</p>
+                <p class="mt-1 text-xs text-rose-500 dark:text-rose-400 font-semibold">{{ $errors->first('password') }}</p>
             @endif
         </div>
 
         <!-- Remember Me -->
         <div class="flex items-center justify-between pt-1">
-            <label for="remember_me" class="inline-flex items-center gap-2 text-xs text-slate-400 cursor-pointer">
-                <input id="remember_me" type="checkbox" name="remember" class="rounded border-slate-800 bg-slate-950 text-blue-600 focus:ring-blue-500">
+            <label for="remember_me" class="inline-flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
+                <input id="remember_me" type="checkbox" name="remember" class="rounded border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-950 text-blue-600 focus:ring-blue-500">
                 <span>Ingat Saya</span>
             </label>
 
             @if (Route::has('password.request'))
-                <a class="text-xs text-blue-400 hover:underline" href="{{ route('password.request') }}">
+                <a class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold" href="{{ route('password.request') }}">
                     Lupa Password?
                 </a>
             @endif
@@ -55,9 +55,9 @@
     </form>
 
     <!-- Register Link Section -->
-    <div class="mt-6 pt-6 border-t border-slate-800 text-center">
-        <p class="text-xs text-slate-400 mb-3">Belum memiliki akun Recovest Finance?</p>
-        <a href="{{ route('register') }}" class="inline-block w-full py-2.5 rounded-xl font-bold text-xs text-emerald-400 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-500/40 transition-colors">
+    <div class="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800 text-center">
+        <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Belum memiliki akun Recovest Finance?</p>
+        <a href="{{ route('register') }}" class="inline-block w-full py-2.5 rounded-xl font-bold text-xs text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 dark:bg-emerald-950/60 hover:bg-emerald-500/20 dark:hover:bg-emerald-900/80 border border-emerald-500/30 dark:border-emerald-500/40 transition-colors">
             Daftar Akun Baru (Register)
         </a>
     </div>
