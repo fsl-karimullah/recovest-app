@@ -25,6 +25,10 @@ Route::middleware(['auth'])->group(function () {
 
         Route::prefix('bank-mutations')->name('bank-mutations.')->group(function () {
             Route::get('/', [BankConnectionController::class, 'index'])->name('index');
+            Route::post('/connection', [BankConnectionController::class, 'storeConnection'])->name('connection.store');
+            Route::delete('/connection/{id}', [BankConnectionController::class, 'destroyConnection'])->name('connection.destroy');
+            Route::post('/mutation', [BankConnectionController::class, 'storeMutation'])->name('mutation.store');
+            Route::delete('/mutation/{id}', [BankConnectionController::class, 'destroyMutation'])->name('mutation.destroy');
             Route::post('/{id}/sync', [BankConnectionController::class, 'sync'])->name('sync');
             Route::post('/{id}/simulate-webhook', [BankConnectionController::class, 'simulateWebhook'])->name('simulate-webhook');
         });
@@ -43,18 +47,24 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('invoices')->name('invoices.')->group(function () {
             Route::get('/', [InvoiceController::class, 'index'])->name('index');
             Route::post('/', [InvoiceController::class, 'store'])->name('store');
+            Route::put('/{id}', [InvoiceController::class, 'update'])->name('update');
+            Route::delete('/{id}', [InvoiceController::class, 'destroy'])->name('destroy');
             Route::post('/{id}/pay', [InvoiceController::class, 'markAsPaid'])->name('pay');
         });
 
         Route::prefix('bills')->name('bills.')->group(function () {
             Route::get('/', [VendorBillController::class, 'index'])->name('index');
             Route::post('/', [VendorBillController::class, 'store'])->name('store');
+            Route::put('/{id}', [VendorBillController::class, 'update'])->name('update');
+            Route::delete('/{id}', [VendorBillController::class, 'destroy'])->name('destroy');
             Route::post('/{id}/pay', [VendorBillController::class, 'markAsPaid'])->name('pay');
         });
 
         Route::prefix('assets')->name('assets.')->group(function () {
             Route::get('/', [FixedAssetController::class, 'index'])->name('index');
             Route::post('/', [FixedAssetController::class, 'store'])->name('store');
+            Route::put('/{id}', [FixedAssetController::class, 'update'])->name('update');
+            Route::delete('/{id}', [FixedAssetController::class, 'destroy'])->name('destroy');
         });
 
         Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');

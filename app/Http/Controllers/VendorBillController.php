@@ -48,6 +48,39 @@ class VendorBillController extends Controller
         return back()->with('success', 'Tagihan Pembelian (Vendor Bill) berhasil dicatat!');
     }
 
+    public function update(Request $request, string $id)
+    {
+        $bill = VendorBill::findOrFail($id);
+        $request->validate([
+            'vendor_name' => 'required|string|max:255',
+            'bill_date' => 'required|date',
+            'due_date' => 'required|date',
+            'total_amount' => 'required|numeric|min:1',
+            'category' => 'required|string|max:100',
+            'notes' => 'nullable|string',
+        ]);
+
+        $bill->update([
+            'vendor_name' => $request->vendor_name,
+            'bill_date' => $request->bill_date,
+            'due_date' => $request->due_date,
+            'total_amount' => $request->total_amount,
+            'category' => $request->category,
+            'notes' => $request->notes ?? null,
+        ]);
+
+        return back()->with('success', 'Tagihan Vendor ' . $bill->bill_number . ' berhasil diperbarui!');
+    }
+
+    public function destroy(string $id)
+    {
+        $bill = VendorBill::findOrFail($id);
+        $number = $bill->bill_number;
+        $bill->delete();
+
+        return back()->with('success', 'Tagihan Vendor ' . $number . ' berhasil dihapus!');
+    }
+
     public function markAsPaid(string $id)
     {
         $bill = VendorBill::findOrFail($id);

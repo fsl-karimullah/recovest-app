@@ -57,4 +57,44 @@ class FixedAssetController extends Controller
 
         return back()->with('success', 'Aset Tetap baru berhasil didaftarkan dan nilai penyusutan dikalkulasi otomatis!');
     }
+
+    public function update(Request $request, string $id)
+    {
+        $asset = FixedAsset::findOrFail($id);
+        $request->validate([
+            'asset_name' => 'required|string|max:255',
+            'purchase_date' => 'required|date',
+            'purchase_cost' => 'required|numeric|min:1',
+            'useful_life_years' => 'required|integer|min:1',
+            'salvage_value' => 'nullable|numeric|min:0',
+        ]);
+
+        $cost = (float) $request->purchase_cost;
+        $salvage = (float) ($request->salvage_value ?? 0);
+        $usefulLife = (int) $request->useful_life_years;
+
+        $annualDepreciation = ($cost - $salvage) / $usefulLife;
+        $bookValue = $cost - $annualDepreciation;
+
+        $asset->update([
+            'asset_name' => $request->asset_name,
+            'purchase_date' => $request->purchase_date,
+            'purchase_cost' => $cost,
+            'salvage_value' => $salvage,
+            'useful_life_years' => $usefulLife,
+            'accumulated_depreciation' => $annualDepreciation,
+            'book_value' => $bookValue,
+        ]);
+
+        return back()->with('success', 'Data Aset Tetap ' . $asset->asset_code . ' berhasil diperbarui!');
+    }
+
+    public function destroy(string $id)
+    {
+        $asset = FixedAsset::findOrFail($id);
+        $code = $asset->asset_code;
+        $asset->delete();
+
+        return back()->with('success', 'Aset Tetap ' . $code . ' berhasil dihapus!');
+    }
 }

@@ -57,6 +57,47 @@ class InvoiceController extends Controller
         return back()->with('success', 'Faktur Penjualan (Invoice) dengan PPN 11% berhasil diterbitkan!');
     }
 
+    public function update(Request $request, string $id)
+    {
+        $invoice = Invoice::findOrFail($id);
+        $request->validate([
+            'client_name' => 'required|string|max:255',
+            'issue_date' => 'required|date',
+            'due_date' => 'required|date',
+            'subtotal' => 'required|numeric|min:1',
+            'tax_rate' => 'nullable|numeric|min:0',
+            'notes' => 'nullable|string',
+        ]);
+
+        $subtotal = (float) $request->subtotal;
+        $taxRate = (float) ($request->tax_rate ?? 11.00);
+        $taxAmount = ($subtotal * $taxRate) / 100;
+        $totalAmount = $subtotal + $taxAmount;
+
+        $invoice->update([
+            'client_name' => $request->client_name,
+            'client_email' => $request->client_email ?? null,
+            'issue_date' => $request->issue_date,
+            'due_date' => $request->due_date,
+            'subtotal' => $subtotal,
+            'tax_rate' => $taxRate,
+            'tax_amount' => $taxAmount,
+            'total_amount' => $totalAmount,
+            'notes' => $request->notes ?? null,
+        ]);
+
+        return back()->with('success', 'Faktur Penjualan ' . $invoice->invoice_number . ' berhasil diperbarui!');
+    }
+
+    public function destroy(string $id)
+    {
+        $invoice = Invoice::findOrFail($id);
+        $number = $invoice->invoice_number;
+        $invoice->delete();
+
+        return back()->with('success', 'Faktur Penjualan ' . $number . ' telah dihapus!');
+    }
+
     public function markAsPaid(string $id)
     {
         $invoice = Invoice::findOrFail($id);
