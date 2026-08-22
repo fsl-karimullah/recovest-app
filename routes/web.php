@@ -1,9 +1,14 @@
 <?php
 
+use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\BankConnectionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FixedAssetController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\VendorBillController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,6 +37,27 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/match', [TransactionController::class, 'matchMutation'])->name('match');
             Route::post('/from-mutation', [TransactionController::class, 'createFromMutation'])->name('create-from-mutation');
         });
+
+        Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+
+        Route::prefix('invoices')->name('invoices.')->group(function () {
+            Route::get('/', [InvoiceController::class, 'index'])->name('index');
+            Route::post('/', [InvoiceController::class, 'store'])->name('store');
+            Route::post('/{id}/pay', [InvoiceController::class, 'markAsPaid'])->name('pay');
+        });
+
+        Route::prefix('bills')->name('bills.')->group(function () {
+            Route::get('/', [VendorBillController::class, 'index'])->name('index');
+            Route::post('/', [VendorBillController::class, 'store'])->name('store');
+            Route::post('/{id}/pay', [VendorBillController::class, 'markAsPaid'])->name('pay');
+        });
+
+        Route::prefix('assets')->name('assets.')->group(function () {
+            Route::get('/', [FixedAssetController::class, 'index'])->name('index');
+            Route::post('/', [FixedAssetController::class, 'store'])->name('store');
+        });
+
+        Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
     });
 });
 
