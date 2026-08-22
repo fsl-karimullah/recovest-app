@@ -9,10 +9,19 @@
 
         <!-- Name -->
         <div>
-            <label for="name" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Lengkap / Pemilik Bisnis</label>
+            <label for="name" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Lengkap Pemilik Bisnis</label>
             <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" placeholder="Faisal Karimullah" class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors">
             @if ($errors->get('name'))
                 <p class="mt-1 text-xs text-rose-500 dark:text-rose-400 font-semibold">{{ $errors->first('name') }}</p>
+            @endif
+        </div>
+
+        <!-- Company / Organization Name -->
+        <div>
+            <label for="company_name" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Perusahaan / Perhitungan Usaha</label>
+            <input id="company_name" type="text" name="company_name" value="{{ old('company_name') }}" required placeholder="PT Sumber Berkah Mandiri / Toko Maju Jaya" class="w-full bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors">
+            @if ($errors->get('company_name'))
+                <p class="mt-1 text-xs text-rose-500 dark:text-rose-400 font-semibold">{{ $errors->first('company_name') }}</p>
             @endif
         </div>
 

@@ -133,7 +133,7 @@
                 </button>
 
                 <span class="text-xs text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 font-semibold">
-                    🏢 {{ $organization->name ?? 'PT Sinergi Berkah Nusantara' }} (IDR)
+                    🏢 {{ auth()->user()->organization->name ?? $organization->name ?? 'Perusahaan Saya' }} (IDR)
                 </span>
             </div>
         </header>

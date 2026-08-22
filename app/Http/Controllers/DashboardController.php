@@ -7,7 +7,6 @@ use App\Models\BankMutation;
 use App\Models\ChartOfAccount;
 use App\Models\Organization;
 use App\Models\Transaction;
-use App\Services\DummyBankService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -16,7 +15,7 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
-        $organization = Organization::first();
+        $organization = $user->organization ?? Organization::first();
 
         // Auto-provision organization if missing for new registered user
         if (!$organization) {
@@ -26,18 +25,20 @@ class DashboardController extends Controller
                 'currency' => 'IDR',
             ]);
 
+            $user->update(['organization_id' => $organization->id]);
+
             // Create default Chart of Accounts
-            $coaBca = ChartOfAccount::create([
+            ChartOfAccount::create([
                 'id' => Str::uuid(),
                 'organization_id' => $organization->id,
-                'account_code' => '101-BCA',
-                'account_name' => 'Bank BCA Corporate',
+                'account_code' => '101-CASH',
+                'account_name' => 'Kas Utama Perusahaan',
                 'account_type' => 'ASSET',
                 'balance' => 0.00,
                 'is_active' => true,
             ]);
 
-            $coaSales = ChartOfAccount::create([
+            ChartOfAccount::create([
                 'id' => Str::uuid(),
                 'organization_id' => $organization->id,
                 'account_code' => '401-SALES',
@@ -46,10 +47,6 @@ class DashboardController extends Controller
                 'balance' => 0.00,
                 'is_active' => true,
             ]);
-
-            $bankService = new DummyBankService();
-            $conn = $bankService->connectBank('BCA', '8820192xxx', $user->name ?? 'Pemilik', $organization->id, $coaBca->id);
-            $bankService->simulateSyncMutations($conn->id, 10);
         }
 
         // Metrics calculations

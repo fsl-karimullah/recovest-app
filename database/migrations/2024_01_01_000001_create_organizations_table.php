@@ -14,10 +14,18 @@ return new class extends Migration
             $table->string('currency', 10)->default('IDR');
             $table->timestamps();
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreignUuid('organization_id')->nullable()->after('id')->constrained('organizations')->nullOnDelete();
+        });
     }
 
     public function down(): void
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['organization_id']);
+            $table->dropColumn('organization_id');
+        });
         Schema::dropIfExists('organizations');
     }
 };
