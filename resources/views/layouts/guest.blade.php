@@ -1,30 +1,47 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="id" class="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Recovest Finance') }} — Authentication</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <!-- Fonts & Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-blue-600 selection:text-white">
+    <div class="min-h-screen flex flex-col justify-center items-center p-6 relative">
+        
+        <!-- Ambient Gradient Background -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
-            </div>
-
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
-            </div>
+        <!-- Brand Logo Header -->
+        <div class="mb-8 text-center space-y-2 z-10">
+            <a href="/" class="inline-flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-emerald-400 flex items-center justify-center font-black text-white text-xl shadow-lg shadow-blue-500/20">
+                    R
+                </div>
+                <div class="text-left">
+                    <span class="font-extrabold text-white tracking-wide text-xl block">RECOVEST</span>
+                    <span class="text-[10px] block text-blue-400 font-semibold uppercase tracking-wider">Accounting & Reconciliation</span>
+                </div>
+            </a>
         </div>
-    </body>
+
+        <!-- Auth Card Container -->
+        <div class="w-full sm:max-w-md bg-slate-900/90 border border-slate-800 backdrop-blur-md p-8 rounded-3xl shadow-2xl z-10">
+            {{ $slot }}
+        </div>
+
+        <!-- Footer Note -->
+        <div class="mt-8 text-center text-xs text-slate-500">
+            © 2026 Recovest — Akademi UMKM & PT Astra Solusi Digital.
+        </div>
+    </div>
+</body>
 </html>

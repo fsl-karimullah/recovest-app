@@ -1,52 +1,61 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <div class="mb-6">
+        <h2 class="text-xl font-bold text-white">Daftar Akun Recovest Finance</h2>
+        <p class="text-xs text-slate-400 mt-1">Buat akun baru untuk mengelola pembukuan & rekonsiliasi bank perusahaan Anda.</p>
+    </div>
+
+    <form method="POST" action="{{ route('register') }}" class="space-y-4">
         @csrf
 
         <!-- Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <label for="name" class="block text-xs font-semibold text-slate-300 mb-1">Nama Lengkap / Pemilik Bisnis</label>
+            <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" placeholder="Faisal Karimullah" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors">
+            @if ($errors->get('name'))
+                <p class="mt-1 text-xs text-rose-400 font-semibold">{{ $errors->first('name') }}</p>
+            @endif
         </div>
 
         <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div>
+            <label for="email" class="block text-xs font-semibold text-slate-300 mb-1">Alamat Email Bisnis</label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" placeholder="faisal@perusahaan.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors">
+            @if ($errors->get('email'))
+                <p class="mt-1 text-xs text-rose-400 font-semibold">{{ $errors->first('email') }}</p>
+            @endif
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div>
+            <label for="password" class="block text-xs font-semibold text-slate-300 mb-1">Kata Sandi (Minimal 8 Karakter)</label>
+            <input id="password" type="password" name="password" required autocomplete="new-password" placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors">
+            @if ($errors->get('password'))
+                <p class="mt-1 text-xs text-rose-400 font-semibold">{{ $errors->first('password') }}</p>
+            @endif
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div>
+            <label for="password_confirmation" class="block text-xs font-semibold text-slate-300 mb-1">Konfirmasi Kata Sandi</label>
+            <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors">
+            @if ($errors->get('password_confirmation'))
+                <p class="mt-1 text-xs text-rose-400 font-semibold">{{ $errors->first('password_confirmation') }}</p>
+            @endif
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+        <!-- Submit Button -->
+        <div class="pt-2">
+            <button type="submit" class="w-full py-3 rounded-xl font-extrabold text-xs text-white bg-emerald-600 hover:bg-emerald-500 shadow-lg shadow-emerald-600/30 transition-all">
+                Daftar Akun Sekarang →
+            </button>
         </div>
     </form>
+
+    <!-- Login Link Section -->
+    <div class="mt-6 pt-6 border-t border-slate-800 text-center">
+        <p class="text-xs text-slate-400 mb-2">Sudah memiliki akun Recovest?</p>
+        <a href="{{ route('login') }}" class="text-xs text-blue-400 font-bold hover:underline">
+            Masuk / Login ke Akun Anda →
+        </a>
+    </div>
 </x-guest-layout>

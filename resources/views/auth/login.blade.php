@@ -1,55 +1,64 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <div class="mb-6">
+        <h2 class="text-xl font-bold text-white">Masuk ke Recovest Finance</h2>
+        <p class="text-xs text-slate-400 mt-1">Masukkan kredensial akun Anda untuk mengelola kas & rekonsiliasi.</p>
+    </div>
 
-    <form method="POST" action="{{ route('login') }}">
+    <!-- Session Status -->
+    @if (session('status'))
+        <div class="mb-4 text-xs font-semibold text-emerald-400 bg-emerald-500/10 p-3 rounded-xl border border-emerald-500/30">
+            {{ session('status') }}
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('login') }}" class="space-y-4">
         @csrf
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <label for="email" class="block text-xs font-semibold text-slate-300 mb-1">Alamat Email</label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" placeholder="admin@recovest.id" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors">
+            @if ($errors->get('email'))
+                <p class="mt-1 text-xs text-rose-400 font-semibold">{{ $errors->first('email') }}</p>
+            @endif
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div>
+            <label for="password" class="block text-xs font-semibold text-slate-300 mb-1">Kata Sandi (Password)</label>
+            <input id="password" type="password" name="password" required autocomplete="current-password" placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors">
+            @if ($errors->get('password'))
+                <p class="mt-1 text-xs text-rose-400 font-semibold">{{ $errors->first('password') }}</p>
+            @endif
         </div>
 
         <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+        <div class="flex items-center justify-between pt-1">
+            <label for="remember_me" class="inline-flex items-center gap-2 text-xs text-slate-400 cursor-pointer">
+                <input id="remember_me" type="checkbox" name="remember" class="rounded border-slate-800 bg-slate-950 text-blue-600 focus:ring-blue-500">
+                <span>Ingat Saya</span>
             </label>
-        </div>
 
-        <div class="flex items-center justify-between mt-6">
             @if (Route::has('password.request'))
-                <a class="underline text-xs text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+                <a class="text-xs text-blue-400 hover:underline" href="{{ route('password.request') }}">
+                    Lupa Password?
                 </a>
             @endif
+        </div>
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+        <!-- Submit Button -->
+        <div class="pt-2">
+            <button type="submit" class="w-full py-3 rounded-xl font-extrabold text-xs text-white bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-600/30 transition-all">
+                Masuk / Login →
+            </button>
         </div>
     </form>
 
     <!-- Register Link Section -->
-    <div class="mt-6 pt-6 border-t border-gray-200 text-center">
-        <p class="text-xs text-gray-600 mb-2">Belum memiliki akun Recovest Finance?</p>
-        <a href="{{ route('register') }}" class="inline-flex items-center justify-center px-4 py-2 bg-emerald-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-emerald-500 active:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition ease-in-out duration-150">
-            Daftar Akun Baru (Register) →
+    <div class="mt-6 pt-6 border-t border-slate-800 text-center">
+        <p class="text-xs text-slate-400 mb-3">Belum memiliki akun Recovest Finance?</p>
+        <a href="{{ route('register') }}" class="inline-block w-full py-2.5 rounded-xl font-bold text-xs text-emerald-400 bg-emerald-950/60 hover:bg-emerald-900/80 border border-emerald-500/40 transition-colors">
+            Daftar Akun Baru (Register)
         </a>
     </div>
 </x-guest-layout>
